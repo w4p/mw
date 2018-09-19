@@ -553,7 +553,7 @@ var MyPlaceListPage = /** @class */ (function () {
         });
     };
     MyPlaceListPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>Мои</ion-title>\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let placeinfo of myplaces">\n      <ion-item (click)="open(places[placeinfo.id].num)">\n        <span class="place-title-num">№{{places[placeinfo.id].num}}</span> <span class="place-title">{{places[placeinfo.id].title}}</span>\n        <div class="grey">\n          <small>\n            Осталось: <b class="unvisited">{{ places[placeinfo.id].totalFlats - placeinfo.visited - places[placeinfo.id].dangerFloors }}</b>,\n            посещено: <b class="visited">{{ placeinfo.visited }}</b>\n            <span class="lastvisit">{{ placeinfo.addTime / 1000 | amFromUnix | amTimeAgo }}</span>\n          </small>\n        </div>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button color="danger" (click)="remove(placeinfo.id)">\n          <ion-icon name="trash"></ion-icon>\n          Удалить\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>Мои</ion-title>\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let placeinfo of myplaces">\n      <ion-item (click)="open(places[placeinfo.id].num)">\n        <span class="place-title-num">№{{places[placeinfo.id].num}}</span> <span class="place-title">{{places[placeinfo.id].title}}</span>\n        <div class="grey">\n          <small>\n            Осталось: <b class="unvisited">{{ places[placeinfo.id].totalFlats - placeinfo.visited - places[placeinfo.id].dangerFloors }}</b>,\n            посещено: <b class="visited">{{ placeinfo.visited }}</b>,\n            грубых: <b class="danger">{{ places[placeinfo.id].dangerFloors + placeinfo.dangerNew }}</b>\n            <span class="lastvisit">{{ placeinfo.addTime / 1000 | amFromUnix | amTimeAgo }}</span>\n          </small>\n        </div>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button color="danger" (click)="remove(placeinfo.id)">\n          <ion-icon name="trash"></ion-icon>\n          Удалить\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__service_placeservice__["a" /* PlaceService */]])
     ], MyPlaceListPage);
@@ -1046,6 +1046,7 @@ var PlaceFlatDetailPage = /** @class */ (function () {
         return this.placeService.getMyPlaceInfo(this.placeid).then(function (info) {
             info.visited = _this.myplace.visited;
             info.unvisited = _this.myplace.unvisited;
+            info.dangerNew = _this.myplace.dangerNew;
             _this.placeService.setMyPlaceInfo(info);
         });
     };
@@ -1069,10 +1070,10 @@ var PlaceFlatDetailPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'place-flat-detail',template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/place-flat-detail/placeflat-detail.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>Описание к</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf="place">\n    <h3 class="text-center">{{ place.num }} {{ place.title }}</h3>\n\n    <div class="quick-actions">\n      <ion-row>\n        <ion-col padding>\n          <button ion-button block color="light" (click)="setType(flatType.VISITED)">Отказ</button>\n        </ion-col>\n        <ion-col padding>\n          <button ion-button block color="secondary" (click)="setType(flatType.GOOD)">Повтор</button>\n        </ion-col>\n        <ion-col padding>\n          <button ion-button block color="danger" (click)="setType(flatType.NEWDANGER)">Грубый</button>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col padding>\n          <button ion-button block (click)="setNoRing(!history.noRing)"\n                  [color]="history.noRing ? \'dark\' : \'primary\'">Нет звонка</button>\n        </ion-col>\n        <ion-col padding>\n          <button ion-button block (click)="setNoDmf(!history.noDmf)"\n                  [color]="history.noDmf ? \'dark\' : \'primary\'">Нет домофона</button>\n        </ion-col>\n      </ion-row>\n    </div>\n\n    <ion-list *ngIf="history">\n      <ion-item *ngFor="let comment of history.comments">\n        {{ comment.text }}\n      </ion-item>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/place-flat-detail/placeflat-detail.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_4__service_placeservice__["a" /* PlaceService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__service_placeservice__["a" /* PlaceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__service_placeservice__["a" /* PlaceService */]) === "function" && _c || Object])
     ], PlaceFlatDetailPage);
     return PlaceFlatDetailPage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=placeflat-detail.js.map
@@ -1266,6 +1267,7 @@ var MyPlaceInfoModel = /** @class */ (function () {
     function MyPlaceInfoModel(id) {
         this.visited = 0;
         this.unvisited = 0;
+        this.dangerNew = 0;
         this.id = id;
     }
     return MyPlaceInfoModel;
@@ -1558,10 +1560,11 @@ var MyPlaceModel = /** @class */ (function () {
         this.flatHistoryMap = {};
         this.unvisited = 0;
         this.visited = 0;
+        this.dangerNew = 0;
         this.id = id;
     }
     MyPlaceModel.refreshCounters = function (model) {
-        var visited = 0, unvisited = 0;
+        var visited = 0, dangernew = 0;
         for (var flnum in model.flatHistoryMap) {
             if (model.flatHistoryMap[flnum] &&
                 (model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].VISITED
@@ -1569,8 +1572,12 @@ var MyPlaceModel = /** @class */ (function () {
                     || model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].GOOD)) {
                 visited++;
             }
+            if (model.flatHistoryMap[flnum] && model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].NEWDANGER) {
+                dangernew++;
+            }
         }
         model.visited = visited;
+        model.dangerNew = dangernew;
     };
     return MyPlaceModel;
 }());

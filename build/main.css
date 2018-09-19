@@ -25690,6 +25690,10 @@ ion-navbar.toolbar {
   float: right;
 }
 
+.danger {
+  color: darkred;
+}
+
 .place-title-num {
   color: #777;
 }
