@@ -1247,7 +1247,10 @@ var MyPlaceModel = /** @class */ (function () {
     MyPlaceModel.refreshCounters = function (model) {
         var visited = 0, unvisited = 0;
         for (var flnum in model.flatHistoryMap) {
-            if (model.flatHistoryMap[flnum] && model.flatHistoryMap[flnum].type != __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].DEFAULT) {
+            if (model.flatHistoryMap[flnum] &&
+                (model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].VISITED
+                    || model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].NEWDANGER
+                    || model.flatHistoryMap[flnum].type == __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].GOOD)) {
                 visited++;
             }
         }
