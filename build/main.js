@@ -69,7 +69,7 @@ var TabsPage = /** @class */ (function () {
         this.tab5Root = __WEBPACK_IMPORTED_MODULE_5__myplace_myplacelist__["a" /* MyPlaceListPage */];
     }
     TabsPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <!--<ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>-->\n  <!--<ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>-->\n  <!--<ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>-->\n  <ion-tab [root]="tab4Root" tabTitle="Place" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab5Root" tabTitle="My" tabIcon="apps"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/tabs/tabs.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <!--<ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>-->\n  <!--<ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>-->\n  <!--<ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>-->\n  <ion-tab [root]="tab5Root" tabTitle="My" tabIcon="apps"></ion-tab>\n  <ion-tab [root]="tab4Root" tabTitle="Place" tabIcon="home"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/tabs/tabs.html"*/
         }),
         __metadata("design:paramtypes", [])
     ], TabsPage);
@@ -1194,8 +1194,18 @@ var MyPlaceInfoModel = /** @class */ (function () {
 var MyPlaceModel = /** @class */ (function () {
     function MyPlaceModel(id) {
         this.flatHistoryMap = {};
+        this.unvisited = 0;
+        this.visited = 0;
         this.id = id;
     }
+    MyPlaceModel.prototype.refreshCounters = function () {
+        var visited = 0, unvisited = 0;
+        for (var flnum in this.flatHistoryMap) {
+            if (this.flatHistoryMap[flnum] && this.flatHistoryMap[flnum].type != __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].DEFAULT) {
+                this.visited++;
+            }
+        }
+    };
     return MyPlaceModel;
 }());
 
