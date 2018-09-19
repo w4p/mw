@@ -889,7 +889,7 @@ var PlaceService = /** @class */ (function () {
             floorPlan.forEach(function (floor) {
                 if (floor.flatList) {
                     floor.flatList.forEach(function (flat) {
-                        if (flat.type == __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].DANGER) {
+                        if (flat.type == __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].DANGER || flat.type == __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].NEWDANGER) {
                             list.push(flat.num);
                         }
                     });
@@ -928,9 +928,10 @@ var PlaceService = /** @class */ (function () {
     };
     PlaceService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */]) === "function" && _a || Object])
     ], PlaceService);
     return PlaceService;
+    var _a;
 }());
 
 //# sourceMappingURL=placeservice.js.map
