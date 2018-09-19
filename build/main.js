@@ -284,11 +284,15 @@ var StorageService = /** @class */ (function () {
             return (storageItem) ? storageItem.value : null;
         });
     };
+    StorageService.prototype.remove = function (key) {
+        return this.storage.remove(key);
+    };
     StorageService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]) === "function" && _a || Object])
     ], StorageService);
     return StorageService;
+    var _a;
 }());
 
 var StorageItem = /** @class */ (function () {
@@ -444,6 +448,7 @@ var PlaceFormPage = /** @class */ (function () {
         var _this = this;
         console.log("Save btn");
         this.isSaving = true;
+        // this.input.dangetFloors = this.getDangerList().length;
         this.placeService.addPlace(this.input, this.floorPlan).then(function () {
             _this.navCtrl.pop();
         });
@@ -452,10 +457,10 @@ var PlaceFormPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'place-form',template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/place-form/place-form.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>{{ title }}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <ion-item>\n      <ion-label>Номер</ion-label>\n      <ion-input required type="number" placeholder="123" [(ngModel)]="input.num" [readonly]="isUpdate"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>Адрес</ion-label>\n      <ion-input required type="text" placeholder="ул.Иванова 1, п.3" [(ngModel)]="input.address"></ion-input>\n    </ion-item>\n    <ion-row>\n      <ion-col>\n        <ion-item>\n          <ion-label>c этажа</ion-label>\n          <ion-input required type="number" placeholder="1" [(ngModel)]="input.fromFloor" (change)="refreshPlan()"></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col>\n        <ion-item>\n          <ion-label>по этаж</ion-label>\n          <ion-input required type="number" placeholder="9" [(ngModel)]="input.toFloor" (change)="refreshPlan()"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col>\n        <ion-item>\n          <ion-label>на этаже</ion-label>\n          <ion-input required type="number" placeholder="4" [(ngModel)]="input.perFloor" (change)="refreshPlan()"></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col>\n        <ion-item>\n          <ion-label>с номера</ion-label>\n          <ion-input required type="number" placeholder="1" [(ngModel)]="input.fromFlat" (change)="refreshPlan()"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n\n    <div padding>\n      <div class="place-detail-title">План</div>\n      <div padding class="plan-actions">\n        <button ion-button small color="secondary"\n                [disabled]="skip <= 0"\n                (click)="moveLeft()">\n          Сдвиг влево\n        </button>\n        <button ion-button small end color="secondary"\n                (click)="moveRight()">\n          Сдвиг вправо\n        </button>\n      </div>\n\n      <ion-row class="floor-block" *ngFor="let floor of floorPlan">\n        <ion-col col-2>\n          <div class="floor">{{ floor.num }} этаж</div>\n        </ion-col>\n        <ion-col col *ngFor="let flat of floor.flatList">\n          <place-flatblock [flat]="flat"></place-flatblock>\n        </ion-col>\n      </ion-row>\n    </div>\n\n  <div padding class="suggestion">\n    <p>Не забудьте отметить квартиры/дома в которые  не заходить. Это можно сделать прямо сейчас.</p>\n  </div>\n\n  <div padding>\n    <button ion-button block [disabled]="isSaving" (click)="save()">Сохранить</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/place-form/place-form.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2__service_placeservice__["a" /* PlaceService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__service_placeservice__["a" /* PlaceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_placeservice__["a" /* PlaceService */]) === "function" && _c || Object])
     ], PlaceFormPage);
     return PlaceFormPage;
+    var _a, _b, _c;
 }());
 
 var PlaceFormInput = /** @class */ (function () {
@@ -466,6 +471,7 @@ var PlaceFormInput = /** @class */ (function () {
         this.fromFloor = 1;
         this.toFloor = 9;
         this.fromFlat = 1;
+        this.dangetFloors = 0;
     }
     PlaceFormInput.prototype.fillFromPlace = function (model) {
         this.num = model.num;
@@ -548,7 +554,7 @@ var MyPlaceListPage = /** @class */ (function () {
         });
     };
     MyPlaceListPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>Мои</ion-title>\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let placeinfo of myplaces">\n      <ion-item (click)="open(places[placeinfo.id].num)">\n        <span class="place-title-num">№{{places[placeinfo.id].num}}</span> <span class="place-title">{{places[placeinfo.id].title}}</span>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button color="danger" (click)="remove(placeinfo.id)">\n          <ion-icon name="trash"></ion-icon>\n          Удалить\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/'<ion-header no-border>\n  <ion-navbar>\n    <ion-title>Мои</ion-title>\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="create()">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item-sliding *ngFor="let placeinfo of myplaces">\n      <ion-item (click)="open(places[placeinfo.id].num)">\n        <span class="place-title-num">№{{places[placeinfo.id].num}}</span> <span class="place-title">{{places[placeinfo.id].title}}</span>\n        <div class="grey">\n          <small>\n            Осталось: <b>{{ places[placeinfo.id].totalFlats - placeinfo.visited - places[placeinfo.id].dangerFloors }}</b>, посещено: <span>{{ placeinfo.visited }}</span>\n          </small>\n        </div>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button color="danger" (click)="remove(placeinfo.id)">\n          <ion-icon name="trash"></ion-icon>\n          Удалить\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/vadim/develop/ionic2/myjw/src/pages/myplace/myplacelist.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__service_placeservice__["a" /* PlaceService */]])
     ], MyPlaceListPage);
@@ -748,24 +754,39 @@ var PlaceFlatDetailPage = /** @class */ (function () {
         });
     }
     PlaceFlatDetailPage.prototype.setType = function (type) {
+        var _this = this;
         this.history.type = type;
         this.history.lastVisit = new Date().getTime();
-        this.saveHistory();
-        this.navCtrl.pop();
+        this.saveHistory().then(function () {
+            _this.navCtrl.pop();
+        });
     };
     PlaceFlatDetailPage.prototype.saveHistory = function () {
+        var _this = this;
         this.myplace.flatHistoryMap[this.flatid] = this.history;
+        __WEBPACK_IMPORTED_MODULE_3__models_MyPlaceModel__["b" /* MyPlaceModel */].refreshCounters(this.myplace);
         this.placeService.saveMyPlaceDetail(this.placeid, this.myplace);
         console.log("Save history", this.history);
+        return this.placeService.getMyPlaceInfo(this.placeid).then(function (info) {
+            info.visited = _this.myplace.visited;
+            info.unvisited = _this.myplace.unvisited;
+            _this.placeService.setMyPlaceInfo(info);
+        });
     };
     PlaceFlatDetailPage.prototype.setNoRing = function (flag) {
+        var _this = this;
         this.history.noRing = flag;
         this.saveHistory();
-        this.navCtrl.pop();
+        this.saveHistory().then(function () {
+            _this.navCtrl.pop();
+        });
     };
     PlaceFlatDetailPage.prototype.setNoDmf = function (flag) {
+        var _this = this;
         this.history.noDmf = flag;
-        this.saveHistory();
+        this.saveHistory().then(function () {
+            _this.navCtrl.pop();
+        });
         this.navCtrl.pop();
     };
     PlaceFlatDetailPage = __decorate([
@@ -1065,23 +1086,44 @@ var PlaceService = /** @class */ (function () {
                         if (flat.type != __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].SKIP) {
                             flatCount++;
                         }
-                        else {
-                            if (flat.type == __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].DANGER.valueOf()) {
-                                dangerCount++;
-                            }
+                        if (flat.type.valueOf() == __WEBPACK_IMPORTED_MODULE_2__models_placeflat__["a" /* FlatType */].DANGER.valueOf()) {
+                            dangerCount++;
                         }
                     });
                 });
                 place.title = input.address;
                 place.totalFlats = flatCount;
                 place.dangerFloors = dangerCount;
+                console.log("save place", place);
                 return _this.savePlace(place);
             });
         }
         return Promise.resolve([]);
     };
     PlaceService.prototype.getMyPlaces = function () {
-        return this.storageService.get(this.MYPLACELISTKEY);
+        return this.storageService.get(this.MYPLACELISTKEY).then(function (myplaces) {
+            return myplaces || [];
+        });
+    };
+    PlaceService.prototype.getMyPlaceInfo = function (id) {
+        return this.getMyPlaces().then(function (myplaces) {
+            return myplaces.filter(function (mypl) { return mypl.id == id; }).shift();
+        });
+    };
+    PlaceService.prototype.setMyPlaceInfo = function (myplace) {
+        var _this = this;
+        return this.getMyPlaces().then(function (myplaces) {
+            var n = -1;
+            myplaces.forEach(function (pl, i) {
+                if (pl.id == myplace.id) {
+                    n = i;
+                }
+            });
+            if (n >= 0) {
+                myplaces[n] = myplace;
+            }
+            return _this.storageService.set(_this.MYPLACELISTKEY, myplaces);
+        });
     };
     PlaceService.prototype.getMyPlaceDetail = function (id) {
         return this.storageService.get(this.PLACE_ID_KEY_PREFIX + id);
@@ -1109,6 +1151,7 @@ var PlaceService = /** @class */ (function () {
         return this.getMyPlaces().then(function (mylist) {
             mylist = mylist.filter(function (value) { return value.id != id; });
             _this.storageService.set(_this.MYPLACELISTKEY, mylist);
+            _this.storageService.remove(_this.PLACE_ID_KEY_PREFIX + id);
             return mylist;
         });
     };
@@ -1157,9 +1200,10 @@ var PlaceService = /** @class */ (function () {
     };
     PlaceService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__storageservice__["a" /* StorageService */]) === "function" && _a || Object])
     ], PlaceService);
     return PlaceService;
+    var _a;
 }());
 
 //# sourceMappingURL=placeservice.js.map
@@ -1173,6 +1217,8 @@ var PlaceService = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyPlaceInfoModel; });
 var MyPlaceInfoModel = /** @class */ (function () {
     function MyPlaceInfoModel(id) {
+        this.visited = 0;
+        this.unvisited = 0;
         this.id = id;
     }
     return MyPlaceInfoModel;
@@ -1198,13 +1244,14 @@ var MyPlaceModel = /** @class */ (function () {
         this.visited = 0;
         this.id = id;
     }
-    MyPlaceModel.prototype.refreshCounters = function () {
+    MyPlaceModel.refreshCounters = function (model) {
         var visited = 0, unvisited = 0;
-        for (var flnum in this.flatHistoryMap) {
-            if (this.flatHistoryMap[flnum] && this.flatHistoryMap[flnum].type != __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].DEFAULT) {
-                this.visited++;
+        for (var flnum in model.flatHistoryMap) {
+            if (model.flatHistoryMap[flnum] && model.flatHistoryMap[flnum].type != __WEBPACK_IMPORTED_MODULE_0__placeflat__["a" /* FlatType */].DEFAULT) {
+                visited++;
             }
         }
+        model.visited = visited;
     };
     return MyPlaceModel;
 }());
