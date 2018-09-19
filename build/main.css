@@ -25686,12 +25686,29 @@ ion-navbar.toolbar {
   color: darkgreen;
 }
 
-.lastvisit {
-  float: right;
-}
-
 .danger {
   color: darkred;
+}
+
+.percentile {
+  display: block;
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+  background: #fff3cd;
+  text-align: center;
+  line-height: 50px;
+  color: #856404;
+}
+
+.percentile.bad {
+  color: #721c24;
+  background: #f8d7da;
+}
+
+.percentile.good {
+  color: #155724;
+  background: #d4edda;
 }
 
 .place-title-num {
