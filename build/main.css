@@ -25678,6 +25678,18 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+.unvisited {
+  color: #000;
+}
+
+.visited {
+  color: darkgreen;
+}
+
+.lastvisit {
+  float: right;
+}
+
 .place-title-num {
   color: #777;
 }
